@@ -4,42 +4,29 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Your build steps here
+                script {
+                    echo 'Compiling the working.cpp file...'
+                    sh 'g++ -o PES1UG21CS433-1 working.cpp'
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                // Your test steps here
+                script {
+                    echo 'Executing the compiled program...'
+                    sh './PES1UG21CS433-1'
+                }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                // Your deployment steps here
-            }
-        }
-        stage('Simulate Error') {
-            steps {
-                echo 'Simulating Error...'
-                // Simulate an error
-                sh 'exit 1' // This will cause the pipeline to fail
-            }
-            post {
-                always {
-                    echo 'Cleaning up...'
-                    // Perform cleanup tasks here
-                }
+                // Add deployment steps here if necessary
+                echo 'Deployment step...'
             }
         }
     }
 
-    // Define global post actions
     post {
-        success {
-            echo 'Pipeline executed successfully!'
-        }
         failure {
             echo 'Pipeline failed!'
         }
